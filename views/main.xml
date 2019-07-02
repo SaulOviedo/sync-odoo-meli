@@ -1,0 +1,34 @@
+<odoo>
+
+        <record model="ir.ui.view" id="course_tree_view">
+            <field name="name">product.template</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <tree decoration-success="meli_status=='Sync'" decoration-bf="meli_status=='Sync'">   
+                    <field name="name"/>
+	            <field name="meli_status"/>
+		    <field name="list_price"/>
+		    <field name="meli_id"/>
+		    <button name="crear" type="object" string="Subir" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="course_list_action">
+            <field name="name">Productos</field>
+            <field name="res_model">product.template</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first Product
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="main_menu" name="MercadoLibre"/>
+        <menuitem id="sub_menu_1" name="Productos"
+                  parent="main_menu"/>
+        <menuitem id="lista" name="Lista" parent="sub_menu_1"
+                  action="course_list_action"/>
+
+</odoo>

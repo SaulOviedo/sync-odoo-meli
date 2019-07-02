@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record model="ir.ui.view" id="view_meli_questions_tree">
+            <field name="name">meli.questions.tree</field>
+            <field name="model">meli.questions</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Questions" default_order="id desc"  decoration-warning="status=='UNANSWERED'" decoration-bf="status=='UNANSWERED'">
+                    <field name="name"/>
+                    <field name="status"/>
+                    <field name="item"/>
+                    <field name="date_created"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_meli_questions_tree">
+            <field name="name">Questions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">meli.questions</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.ui.view" id="view_meli_questions_form">
+            <field name="name">meli.questions.form</field>
+            <field name="model">meli.questions</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+	    <form>
+		<sheet>
+		<group colspan="2">
+		     <group col="2">
+                       	<field name="item"/>
+                   	<field name="status"/>
+		     </group>
+		     <group col="2">
+                  	<field name="name"/>
+                       	<field name="date_created"/>
+             	     </group>
+		</group>
+		<group colspan="3">
+                	<field name="question"/>
+		</group>
+		<group colspan="3">
+                       	<field name="answer"/>
+		</group>
+                <footer>
+                    <button name="posting" string="Responder"  type="object" class="oe_highlight" attrs="{'invisible':[('status','=','ANSWERED')]}" />
+		 
+                    <button string="Cancelar" class="oe_link" special="cancel" attrs="{'invisible':[('status','=','ANSWERED')]}"/>
+                </footer>
+		</sheet>
+	    </form>
+            </field>
+        </record>
+
+        <menuitem id="menu_question" name="Preguntas"
+                  parent="main_menu" action="action_meli_questions_tree"/>
+
+</odoo>

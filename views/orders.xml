@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record model="ir.ui.view" id="view_meli_orders_tree">
+            <field name="name">meli.orders.tree</field>
+            <field name="model">meli.orders</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Orders" default_order="id desc">
+                    <field name="name"/>
+                    <field name="status"/>
+                    <field name="date_created"/>
+                    <field name="date_closed"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_meli_orderitems_tree">
+            <field name="name">meli.order_items.tree</field>
+            <field name="model">meli.order_items</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Orders">
+                    <field name="item"/>
+                    <field name="quantity"/>
+                    <field name="unit_price"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_meli_orders_tree">
+            <field name="name">Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">meli.orders</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.ui.view" id="view_meli_orders_form">
+            <field name="name">meli.orders.form</field>
+            <field name="model">meli.orders</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+	    <form>
+		<sheet>
+		<group colspan="2">
+			<group col="2">
+                  	  	<field name="name"/>
+                   		<field name="buyer"/>
+                  		<field name="status"/>
+		  		<field name="total_amount"/>
+			</group>
+			<group col="2">
+                  		<field name="status_detail"/>
+                    		<field name="currency_id"/>
+                   		<field name="date_created"/>
+                   		<field name="date_closed"/>
+			</group>
+		</group>
+		<group colspan="4">
+		     <field name="order_items"/>
+		</group>
+		</sheet>
+	    </form>
+            </field>
+        </record>
+
+        <menuitem id="sub_menu_2" name="Ventas"
+                  parent="main_menu" action="action_meli_orders_tree" />
+
+</odoo>

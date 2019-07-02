@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record model="ir.ui.view" id="view_company_page_mercadolibre">
+            <field name="name">res.company.form.meli</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                    <notebook position="inside">
+                        <page string="MercadoLibre">
+				<group>
+					<field name="meli_status" invisible="1"/>
+					<field name="meli_access_token" />
+					<field name="meli_refresh_token" />
+					<field name="meli_country" />
+				<footer>
+					<button name='meli_login' type="object" string="Iniciar sesión" attrs="{'invisible':[('meli_status','=',True)]}"/>
+					<button name='meli_logout' type="object" string="Cerrar sesión" attrs="{'invisible':[('meli_status','=',False)]}"/>
+				</footer>
+				</group>
+                        </page>
+                    </notebook>
+            </field>
+        </record>
+</odoo>

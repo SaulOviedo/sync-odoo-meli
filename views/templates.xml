@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="login" name="Inicio de Sesión">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+<div class='row justify-content-md-center align-items-center' style="height: 100vh;">
+   <div class="col-md-6">
+      <div class="header clearfix">
+        <h3 class="display-5 text-muted">Odoo - Mercadolibre</h3>
+      </div>
+
+<div class="jumbotron bg-info">
+  <h1 class="display-3 text-white">Éxito!</h1>
+  <p class="lead text-white">Se ha iniciado sesión correctamente.</p>
+  <hr class="my-4"/>
+  <p class="text-white">Ahora estas listo para subir tus productos a Mercadolibre. Haz clic en el botón "Volver" para ver la lista de productos.</p>
+  <p class="lead">
+    <a class="btn btn-outline-light" href="/web" role="button">Volver</a>
+  </p>
+</div>
+
+      <footer class="footer">
+        <p>  2017 ChileDev, Inc.</p>
+      </footer>
+
+    </div> 
+</div>
+
+    </template>
+    <template id="nocode" name="Inicio de Sesión">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    
+<div class='row justify-content-md-center align-items-center' style="height: 100vh;">
+   <div class="col-md-6">
+      <div class="header clearfix">
+        <h3 class="display-5 text-muted">Odoo - Mercadolibre</h3>
+      </div>
+
+<div class="jumbotron bg-danger">
+  <h1 class="display-3 text-white">Error!</h1>
+  <p class="lead text-white">No se ha encontrado ningún código de autenticación. </p>
+  <hr class="my-4"/>
+  <p class="text-white">Por favor, ingrese al sistema de forma adecuada. Haz clic en "Volver" para ser redirigido al menú de configuración.</p>
+  <p class="lead">
+    <a class="btn btn-outline-light" href="/web#menu_id=61" role="button">Volver</a>
+  </p>
+</div>
+      <footer class="footer">
+        <p> 2017 ChileDev, Inc.</p>
+      </footer>
+    </div> 
+</div>
+    </template>
+</odoo>

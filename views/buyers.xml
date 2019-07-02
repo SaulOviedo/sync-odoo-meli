@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record model="ir.ui.view" id="view_meli_buyers_tree">
+            <field name="name">meli.buyers.tree</field>
+            <field name="model">meli.buyers</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Buyers" >
+                    <field name="buyer_id"/>
+                    <field name="name"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_meli_buyers_tree">
+            <field name="name">Buyers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">meli.buyers</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="sub_menu_3" name="Compradores"
+                  parent="main_menu" action="action_meli_buyers_tree"/>
+
+</odoo>
