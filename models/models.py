@@ -16,10 +16,10 @@ class productTemplate(models.Model):
 	_inherit = 'product.template'
 
 	meli_description = fields.Text(string='Descripción', default='Producto en Perfectas condiciones.')
-	meli_status = fields.Char(string='Status', default='NoSync', readonly=True)
+	meli_status = fields.Char(string='Status', default='NoSync', readonly=True, compute='_depends_meli_id')
 	meli_warranty = fields.Char(string='Garantía')
 	meli_condition = fields.Selection(selection=[ ("new","Nuevo"), ("used","Usado")] ,string='Condición', default="new")
-	meli_id = fields.Char(string='MercadoLibre ID', default='', readonly=True)
+	meli_id = fields.Char(string='MercadoLibre ID', default='', readonly=False)
 	meli_type = fields.Many2one('meli.listing', 'Tipo de Publicación', default=lambda self: self.env['meli.listing'].search([],limit=1))
 	product_image_ids = fields.One2many('product.image', 'product_tmpl_id', string='Images')
 
@@ -73,6 +73,13 @@ class productTemplate(models.Model):
 			_logger.info( resp )
 			raise exceptions.except_orm(_('Error'), resp['cause'][0]['message'])
 			
+	@api.depends('meli_id')
+	def _depends_meli_id(self):
+		for r in self:
+			if(r.meli_id):
+				r.meli_status = 'Sync'
+			else:
+				r.meli_status = 'NoSync'
 
 	@api.onchange('name')
 	def _onchange_name(self):
@@ -118,7 +125,6 @@ class productTemplate(models.Model):
 		attr = mh.attributes(meli, category['id'])
 		needed = [ a for a in attr]
 		found = [ a.attribute_id.name for a in self.attribute_line_ids]
-		_logger.info( 'Aquiii' )
 		_logger.info( needed )
 		_logger.info( found )
 		if not ( set(needed) <= set(found) ):

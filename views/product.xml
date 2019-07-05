@@ -12,6 +12,7 @@
                 <notebook position="inside">
                     <page string="Mercadolibre">
                         <group>
+                <field name="meli_id"/>
 			    <field name="meli_type"/>
 			    <field name="meli_condition"/>
 			    <field name="meli_warranty"/>

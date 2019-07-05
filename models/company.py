@@ -19,7 +19,7 @@ class res_company(models.Model):
 	meli_status = fields.Boolean(string='Status', default=False)
 	meli_access_token = fields.Char( string='Access Token',size=256, readonly=False)
 	meli_refresh_token = fields.Char( string='Refresh Token', size=256, readonly=False)
-	meli_country = fields.Selection(selection=[ ("MLA","Argentina"), ("MLB","Brasil"), ("MCO","Colombia"), ("MCR","Costa Rica"), ("MEC","Ecuador"), ("MLM","Mexico"), ("MLU","Uruguay"), ("MLC","Chile"), ("MPA","Panama"), ("MPE","Peru"), ("MRD","Dominicada"), ("MLV","Venezuela")] ,string='Pais de Origen', default="MLC")
+	meli_country = fields.Selection(selection=[ ("MLA","Argentina"), ("MLB","Brasil"), ("MCO","Colombia"), ("MCR","Costa Rica"), ("MEC","Ecuador"), ("MLM","Mexico"), ("MLU","Uruguay"), ("MLC","Chile"), ("MPA","Panama"), ("MPE","Peru"), ("MRD","Dominicada"), ("MLV","Venezuela")] ,string='Pais de Origen', default="MLV")
 
 	@api.one
 	def meli_logout(self):

@@ -9,7 +9,7 @@
 	            <field name="meli_status"/>
 		    <field name="list_price"/>
 		    <field name="meli_id"/>
-		    <button name="crear" type="object" string="Subir" />
+		    <button name="crear" type="object" string="Subir" attrs="{'invisible':[('meli_status','=','Sync')]}" />
                 </tree>
             </field>
         </record>
