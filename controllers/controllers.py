@@ -80,6 +80,6 @@ class api_test(http.Controller):
 			company = http.request.env.user.company_id
 			_logger.info( company )
 			company.write({'meli_access_token' : meli.access_token, 'meli_refresh_token' : meli.refresh_token, 'meli_status': True})
-			return http.request.render('sync.login', {})
+			return http.request.render('sync-odoo-meli.login', {})
 		else:
-			return http.request.render('sync.nocode', {})
+			return http.request.render('sync-odoo-meli.nocode', {})
