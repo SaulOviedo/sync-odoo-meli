@@ -130,7 +130,7 @@ class productTemplate(models.Model):
 		if not ( set(needed) <= set(found) ):
 			raise ValidationError(' Recuerde agregar los siguientes Atributos: \n\n-'+'\n -'.join([a for a in attr] or ['Ninguno']) )
 
-	@api.constrains('name','list_price')
+	@api.constrains('name','list_price','qty_available')
 	def last_change(self):
 		_logger.info('Entre a Update')
 		self.update()
