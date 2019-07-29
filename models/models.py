@@ -133,12 +133,13 @@ class productTemplate(models.Model):
 	@api.constrains('name','list_price','qty_available')
 	def last_change(self):
 		_logger.info('Entre a Update')
-		self.update()
+		self.meli_update()
 
 
-	def update(self):
+	def meli_update(self):
 		company = self.env.user.company_id
 		meli = Meli(client_id=CLIENT_ID,client_secret=CLIENT_SECRET, access_token= company.meli_access_token )
-		data = {'title': self.name, 'price': self.list_price, "available_quantity": self.qty_available}
+		data = {'title': self.name, 'price': int(self.list_price), "available_quantity": self.qty_available}
 		if self.meli_id:
 			response = meli.put("/items/"+self.meli_id, data, {'access_token':meli.access_token})
+			_logger.info(response.content)
