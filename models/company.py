@@ -24,7 +24,7 @@ class res_company(models.Model):
 	@api.one
 	def meli_logout(self):
 		self.write({'meli_access_token': False, 'meli_refresh_token': False, 'meli_status': False})
-	
+
 	def meli_login(self):
 		company = self.env.user.company_id
 		meli = Meli(client_id=CLIENT_ID,client_secret=CLIENT_SECRET)
@@ -45,7 +45,7 @@ class res_company(models.Model):
 		for type in resp:
 			found = self.env['meli.listing'].sudo().search([('name','=', type['name'])])
 			if not found:
-				data.create({'name': type['name'], 'type_id': type['id']})		 
+				data.create({'name': type['name'], 'type_id': type['id']})
 
 
 	@api.model
@@ -61,5 +61,5 @@ class res_company(models.Model):
 				company.write({'meli_access_token' : meli.access_token, 'meli_refresh_token' : meli.refresh_token})
 		products = self.env['product.template'].search([('meli_id', '!=','')])
 		for p in products:
-			p.update()
-		_logger.info('------updated all------')	
+			p.meli_update()
+		_logger.info('------updated all------')
