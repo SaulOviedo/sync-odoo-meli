@@ -54,6 +54,8 @@ class productTemplate(models.Model):
 		img_ids = self.upload_image()
 		if img_ids == []:
 			raise exceptions.except_orm(_('Error'),_('Su producto debe contener al menos una Imagen.'))
+		if self.type != "product":
+			raise exceptions.except_orm(_('Error'),_('El articulo no es de tipo producto.'))
 		if self.qty_available == 0:
 			raise exceptions.except_orm(_('Error'),_('No hay existencia del producto.\n Por favor, actualice su Inventario.'))
 		if self.meli_type == False:
@@ -72,7 +74,7 @@ class productTemplate(models.Model):
 			resp = json.loads(resp.content)
 			_logger.info( resp )
 			raise exceptions.except_orm(_('Error'), resp['cause'][0]['message'])
-			
+
 	@api.depends('meli_id')
 	def _depends_meli_id(self):
 		for r in self:
@@ -85,7 +87,7 @@ class productTemplate(models.Model):
 	def _onchange_name(self):
 		company = self.env.user.company_id
 		meli = Meli(client_id=CLIENT_ID,client_secret=CLIENT_SECRET, access_token= company.meli_access_token)
-		if self.name :
+		if self.name and self.type=="product":
 			category = mh.predict( meli, company.meli_country, {'title':self.name ,'price': self.list_price})
 			_logger.info( category['id'] )
 			attr = mh.attributes(meli, category['id'])
