@@ -35,6 +35,7 @@ class api_test(http.Controller):
 			_logger.info('-------- testeo ---------')
 
 		elif code[0] == "orders":
+			xstr = lambda s: s or ""
 			_logger.info('-------- Entro en Order ---------')
 			order = http.request.env['sale.order'].sudo().search([('meli_id','=',code[1])],limit=1)
 			if order:
@@ -50,7 +51,7 @@ class api_test(http.Controller):
 				else:
 					_logger.info('--------- buyer NO encontrado ---------')
 					buyer = {'name': b['first_name'].capitalize()+' '+b['last_name'].capitalize(), 'meli_id': str(b['id']), 'meli_nickname': b['nickname'], 'email': b['email'] ,
-						'phone': b['phone']['extension']+' '+b['phone']['area_code']+'-'+b['phone']['number'], 'billing_info': b['billing_info']['doc_number'], 'vat':b['billing_info']['doc_number'] , 'is_company':False}
+						'phone':xstr(b['phone']['extension'])+' '+xstr(b['phone']['area_code'])+'-'+xstr(b['phone']['number']), 'billing_info': b['billing_info']['doc_number'], 'vat':b['billing_info']['doc_number'] , 'is_company':False}
 					buyer = http.request.env['res.partner'].sudo().create(buyer)
 					_logger.info(buyer)
 
