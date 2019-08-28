@@ -48,27 +48,27 @@ class api_test(http.Controller):
 				buyer = http.request.env['res.partner'].sudo().search([('meli_id','=', str(b['id']))],limit=1)
 				if buyer:
 					_logger.info('--------- buyer encontrado ---------')
-				else:
+				else and resp['status']=="paid":
 					_logger.info('--------- buyer NO encontrado ---------')
 					buyer = {'name': b['first_name'].capitalize()+' '+b['last_name'].capitalize(), 'meli_id': str(b['id']), 'meli_nickname': b['nickname'], 'email': b['email'] ,
 						'phone':xstr(b['phone']['extension'])+' '+xstr(b['phone']['area_code'])+'-'+xstr(b['phone']['number']), 'billing_info': b['billing_info']['doc_number'], 'vat':b['billing_info']['doc_number'] , 'is_company':False}
 					buyer = http.request.env['res.partner'].sudo().create(buyer)
 					_logger.info(buyer)
 
-				detail = {'name': 'ML'+code[1], 'meli_id': code[1],'partner_id': buyer.id, 'state':'sale', 'invoice_status':'to invoice',
-					 'confirmation_date': fields.Datetime.now(), 'date_order': fields.Datetime.now()}
-				order = http.request.env['sale.order'].sudo().create(detail)
-				items = resp['order_items']
-				line_env = http.request.env['sale.order.line']
-				for item in items:
-					product = http.request.env['product.template'].sudo().search([('meli_id','=', item['item']['id'] )],limit=1)
-					if product:
-						product_detail = {'product_id': product.product_variant_ids.id, 'name': product.product_variant_ids.name ,'order_id': order.id, 'product_uom_qty' : item["quantity"] }
-						new_line = line_env.sudo().create(product_detail)
-						new_line.product_id_change()
-					else:
-						order.unlink()
-				order.write({'invoice_status':'to invoice'})
+				if resp['status'] == "paid":
+					detail = {'name': 'ML'+code[1], 'meli_id': code[1],'partner_id': buyer.id, 'state':'sale', 'invoice_status':'to invoice', 'confirmation_date': fields.Datetime.now(), 'date_order': fields.Datetime.now()}
+					order = http.request.env['sale.order'].sudo().create(detail)
+					items = resp['order_items']
+					line_env = http.request.env['sale.order.line']
+					for item in items:
+						product = http.request.env['product.template'].sudo().search([('meli_id','=', item['item']['id'] )],limit=1)
+						if product:
+							product_detail = {'product_id': product.product_variant_ids.id, 'name': product.product_variant_ids.name ,'order_id': order.id, 'product_uom_qty' : item["quantity"] }
+							new_line = line_env.sudo().create(product_detail)
+							new_line.product_id_change()
+						else:
+							order.unlink()
+					order.write({'invoice_status':'to invoice'})
 		return json.dumps({'result':'ok'})
 		
 	@http.route('/sync/login', type='http', auth='user', website=True)
