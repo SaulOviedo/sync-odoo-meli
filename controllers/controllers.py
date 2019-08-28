@@ -14,6 +14,7 @@ class api_test(http.Controller):
 		company =  http.request.env['res.company'].sudo().search([('meli_access_token','!=',None)],limit=1)
 		_logger.info(company)
 		meli = Meli(client_id=CLIENT_ID,client_secret=CLIENT_SECRET, access_token=company.meli_access_token)
+		topic= args.get('topic','none')
 		code = args.get('resource','none')
 		code = code[1:].split('/')
 		conn = mh.check_connection(meli)
@@ -22,7 +23,7 @@ class api_test(http.Controller):
 			_logger.info("Json recived, but not connected.")
 			return json.dumps({'result':'ok'})
 
-		if code[0] == "questions":
+		if topic == "questions":
 				resp = meli.get(args['resource'], {'access_token':meli.access_token})
 				resp = json.loads(resp.content)
 				item = http.request.env['product.template'].sudo().search([('meli_id','=', resp['item_id'] )],limit=1)
@@ -31,10 +32,10 @@ class api_test(http.Controller):
 					detail = {'name': resp['id'], 'status': resp['status'], 'date_created': resp['date_created'], 'item': item.id, 'question':resp['text']}
 					http.request.env['meli.questions'].sudo().create(detail)
 
-		elif code[0] == "items":
+		elif topic == "items":
 			_logger.info('-------- testeo ---------')
 
-		elif code[0] == "orders":
+		elif topic == "created_orders":
 			xstr = lambda s: s or ""
 			_logger.info('-------- Entro en Order ---------')
 			order = http.request.env['sale.order'].sudo().search([('meli_id','=',code[1])],limit=1)
@@ -48,12 +49,12 @@ class api_test(http.Controller):
 				buyer = http.request.env['res.partner'].sudo().search([('meli_id','=', str(b['id']))],limit=1)
 				if buyer:
 					_logger.info('--------- buyer encontrado ---------')
-				else and resp['status']=="paid":
-					_logger.info('--------- buyer NO encontrado ---------')
-					buyer = {'name': b['first_name'].capitalize()+' '+b['last_name'].capitalize(), 'meli_id': str(b['id']), 'meli_nickname': b['nickname'], 'email': b['email'] ,
-						'phone':xstr(b['phone']['extension'])+' '+xstr(b['phone']['area_code'])+'-'+xstr(b['phone']['number']), 'billing_info': b['billing_info']['doc_number'], 'vat':b['billing_info']['doc_number'] , 'is_company':False}
-					buyer = http.request.env['res.partner'].sudo().create(buyer)
-					_logger.info(buyer)
+				else:
+					if resp['status']=="paid":
+						_logger.info('--------- buyer NO encontrado ---------')
+						buyer = {'name': b['first_name'].capitalize()+' '+b['last_name'].capitalize(), 'meli_id': str(b['id']), 'meli_nickname': b['nickname'], 'email': b['email'] , 'phone':xstr(b['phone']['extension'])+' '+xstr(b['phone']['area_code'])+'-'+xstr(b['phone']['number']), 'billing_info': b['billing_info']['doc_number'], 'vat':b['billing_info']['doc_number'] , 'is_company':False}
+						buyer = http.request.env['res.partner'].sudo().create(buyer)
+						_logger.info(buyer)
 
 				if resp['status'] == "paid":
 					detail = {'name': 'ML'+code[1], 'meli_id': code[1],'partner_id': buyer.id, 'state':'sale', 'invoice_status':'to invoice', 'confirmation_date': fields.Datetime.now(), 'date_order': fields.Datetime.now()}
